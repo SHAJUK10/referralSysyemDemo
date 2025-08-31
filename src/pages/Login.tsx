@@ -81,10 +81,10 @@ const Login: React.FC = () => {
         
         <div className="text-center">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => window.location.reload()}
             className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
           >
-            ← Back to Home
+            ← Refresh Page
           </button>
         </div>
       </div>
