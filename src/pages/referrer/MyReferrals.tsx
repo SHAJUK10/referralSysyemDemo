@@ -7,10 +7,25 @@ import Modal from '../../components/ui/Modal';
 import Button from '../../components/ui/Button';
 
 const MyReferrals: React.FC = () => {
-  const [referrals] = useState<Referral[]>(demoReferrals.filter(ref => ref.referredBy === 'REF001'));
+  const [referrals, setReferrals] = useState<Referral[]>(() => {
+    // Combine demo referrals with public referrals from localStorage
+    const publicReferrals = JSON.parse(localStorage.getItem('publicReferrals') || '[]');
+    const demoRefs = demoReferrals.filter(ref => ref.referredBy === 'REF001');
+    return [...demoRefs, ...publicReferrals];
+  });
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedReferral, setSelectedReferral] = useState<Referral | null>(null);
 
+  // Refresh referrals from localStorage periodically
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const publicReferrals = JSON.parse(localStorage.getItem('publicReferrals') || '[]');
+      const demoRefs = demoReferrals.filter(ref => ref.referredBy === 'REF001');
+      setReferrals([...demoRefs, ...publicReferrals]);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
   const filteredReferrals = referrals.filter(referral => 
     statusFilter === 'all' || referral.status === statusFilter
   );
@@ -187,6 +202,12 @@ const MyReferrals: React.FC = () => {
                 <label className="text-sm font-medium text-gray-700">Reward</label>
                 <p className="text-gray-900 font-semibold">₹{selectedReferral.reward.toLocaleString()}</p>
               </div>
+              {(selectedReferral as any).budget && (
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Budget</label>
+                  <p className="text-gray-900">{(selectedReferral as any).budget}</p>
+                </div>
+              )}
             </div>
 
             {selectedReferral.notes && (
@@ -195,6 +216,13 @@ const MyReferrals: React.FC = () => {
                 <p className="text-gray-900 mt-1">{selectedReferral.notes}</p>
               </div>
             )}
+
+            <div>
+              <label className="text-sm font-medium text-gray-700">Source</label>
+              <p className="text-gray-900">
+                {(selectedReferral as any).budget ? 'Referral Link' : 'Manual Entry'}
+              </p>
+            </div>
 
             <div>
               <label className="text-sm font-medium text-gray-700">Submission Date</label>

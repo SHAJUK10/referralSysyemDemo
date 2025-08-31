@@ -18,6 +18,7 @@ import MyReferrals from './pages/referrer/MyReferrals';
 // Referee Pages
 import RefereeDashboard from './pages/referee/RefereeDashboard';
 import ScheduleVisit from './pages/referee/ScheduleVisit';
+import PublicReferralForm from './pages/PublicReferralForm';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/refer/:referrerId" element={<PublicReferralForm />} />
 
           {/* Protected Routes */}
           <Route path="/admin" element={

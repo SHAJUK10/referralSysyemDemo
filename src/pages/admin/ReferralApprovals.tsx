@@ -6,7 +6,21 @@ import StatusBadge from '../../components/ui/StatusBadge';
 import Button from '../../components/ui/Button';
 
 const ReferralApprovals: React.FC = () => {
-  const [referrals, setReferrals] = useState<Referral[]>(demoReferrals);
+  const [referrals, setReferrals] = useState<Referral[]>(() => {
+    // Combine demo referrals with public referrals from localStorage
+    const publicReferrals = JSON.parse(localStorage.getItem('publicReferrals') || '[]');
+    return [...demoReferrals, ...publicReferrals];
+  });
+
+  // Refresh referrals from localStorage periodically
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const publicReferrals = JSON.parse(localStorage.getItem('publicReferrals') || '[]');
+      setReferrals([...demoReferrals, ...publicReferrals]);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleApproval = (referralId: string, approved: boolean) => {
     setReferrals(prev => prev.map(referral => 

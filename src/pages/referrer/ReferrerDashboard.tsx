@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { UserPlus, Users, TrendingUp, Wallet, Bell } from 'lucide-react';
+import { UserPlus, Users, TrendingUp, Wallet, Bell, Share2 } from 'lucide-react';
 import AddReferral from './AddReferral';
 import MyReferrals from './MyReferrals';
 import PerformanceMetrics from './PerformanceMetrics';
 import ReferrerWallet from './ReferrerWallet';
 import ReferrerNotifications from './ReferrerNotifications';
+import ShareReferralLink from './ShareReferralLink';
 
 const ReferrerDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'add-referral' | 'referrals' | 'performance' | 'wallet' | 'notifications'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'add-referral' | 'referrals' | 'performance' | 'wallet' | 'notifications' | 'share-link'>('overview');
 
   const stats = {
     totalReferrals: 12,
@@ -31,6 +32,8 @@ const ReferrerDashboard: React.FC = () => {
         return <ReferrerWallet />;
       case 'notifications':
         return <ReferrerNotifications />;
+      case 'share-link':
+        return <ShareReferralLink />;
       default:
         return (
           <div className="space-y-6">
@@ -96,6 +99,15 @@ const ReferrerDashboard: React.FC = () => {
                 </button>
 
                 <button
+                  onClick={() => setActiveTab('share-link')}
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                >
+                  <Share2 className="w-8 h-8 text-purple-600 mb-2" />
+                  <h4 className="font-medium text-gray-900">Share Link</h4>
+                  <p className="text-sm text-gray-600">Get referral link</p>
+                </button>
+
+                <button
                   onClick={() => setActiveTab('performance')}
                   className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
                 >
@@ -104,6 +116,9 @@ const ReferrerDashboard: React.FC = () => {
                   <p className="text-sm text-gray-600">View metrics</p>
                 </button>
 
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <button
                   onClick={() => setActiveTab('wallet')}
                   className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
@@ -162,7 +177,8 @@ const ReferrerDashboard: React.FC = () => {
               { key: 'referrals', label: 'My Referrals' },
               { key: 'performance', label: 'Performance' },
               { key: 'wallet', label: 'Wallet' },
-              { key: 'notifications', label: 'Notifications' }
+              { key: 'notifications', label: 'Notifications' },
+              { key: 'share-link', label: 'Share Link' }
             ].map(({ key, label }) => (
               <button
                 key={key}
