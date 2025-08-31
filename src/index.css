@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide Bolt branding */
+[data-bolt-branding],
+.bolt-branding,
+div[style*="Made in Bolt"],
+div[style*="made in bolt"],
+a[href*="bolt.new"],
+a[href*="stackblitz.com"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Additional selectors for common branding patterns */
+div:has-text("Made in Bolt"),
+div:has-text("made in bolt"),
+span:has-text("Made in Bolt"),
+span:has-text("made in bolt") {
+  display: none !important;
+}
+
+/* Hide any footer or bottom-positioned branding */
+div[style*="position: fixed"][style*="bottom"],
+div[style*="position:fixed"][style*="bottom"] {
+  display: none !important;
+}
+
+/* Target specific Bolt branding selectors */
+.bolt-footer,
+.bolt-watermark,
+#bolt-branding,
+[class*="bolt-brand"],
+[id*="bolt-brand"] {
+  display: none !important;
+  visibility: hidden !important;
+}
