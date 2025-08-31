@@ -14,10 +14,24 @@ import ReferralApprovals from './pages/admin/ReferralApprovals';
 import ReferrerDashboard from './pages/referrer/ReferrerDashboard';
 import AddReferral from './pages/referrer/AddReferral';
 import MyReferrals from './pages/referrer/MyReferrals';
+import PerformanceMetrics from './pages/referrer/PerformanceMetrics';
+import ReferrerWallet from './pages/referrer/ReferrerWallet';
+import ReferrerNotifications from './pages/referrer/ReferrerNotifications';
+import ShareReferralLink from './pages/referrer/ShareReferralLink';
 
 // Referee Pages
 import RefereeDashboard from './pages/referee/RefereeDashboard';
 import ScheduleVisit from './pages/referee/ScheduleVisit';
+import RefereeStatus from './pages/referee/RefereeStatus';
+import RequestCallback from './pages/referee/RequestCallback';
+import RefereeMessages from './pages/referee/RefereeMessages';
+import RefereeProfile from './pages/referee/RefereeProfile';
+
+// Admin Pages (additional)
+import RewardsManagement from './pages/admin/RewardsManagement';
+import Analytics from './pages/admin/Analytics';
+import AdminNotifications from './pages/admin/AdminNotifications';
+
 import PublicReferralForm from './pages/PublicReferralForm';
 
 function App() {
@@ -50,6 +64,12 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<ReferrerDashboard />} />
+            <Route path="share-link" element={<ShareReferralLink />} />
+            <Route path="add-referral" element={<AddReferral />} />
+            <Route path="referrals" element={<MyReferrals />} />
+            <Route path="performance" element={<PerformanceMetrics />} />
+            <Route path="wallet" element={<ReferrerWallet />} />
+            <Route path="notifications" element={<ReferrerNotifications />} />
           </Route>
 
           <Route path="/referee" element={

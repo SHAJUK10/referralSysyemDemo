@@ -12,7 +12,8 @@ import {
   Wallet,
   Calendar,
   MessageCircle,
-  User
+  User,
+  Share2
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -33,6 +34,12 @@ const Sidebar: React.FC = () => {
       case 'referrer':
         return [
           { to: '/referrer', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/referrer/share-link', icon: Share2, label: 'Share Referral Link', highlight: true },
+          { to: '/referrer/add-referral', icon: UserPlus, label: 'Add Referral' },
+          { to: '/referrer/referrals', icon: Users, label: 'My Referrals' },
+          { to: '/referrer/performance', icon: TrendingUp, label: 'Performance' },
+          { to: '/referrer/wallet', icon: Wallet, label: 'Wallet' },
+          { to: '/referrer/notifications', icon: Bell, label: 'Notifications' }
         ];
       case 'referee':
         return [
@@ -65,13 +72,19 @@ const Sidebar: React.FC = () => {
             <NavLink
               key={item.to}
               to={item.to}
-              className={({ isActive }) =>
-                `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+              className={({ isActive }) => {
+                const baseClasses = `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-indigo-50 text-indigo-700 border-r-2 border-indigo-700'
                     : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                }`
-              }
+                }`;
+                
+                const highlightClasses = (item as any).highlight 
+                  ? 'ring-2 ring-indigo-200 bg-gradient-to-r from-indigo-50 to-blue-50' 
+                  : '';
+                
+                return `${baseClasses} ${highlightClasses}`;
+              }}
             >
               <item.icon className="w-5 h-5" />
               <span className="font-medium">{item.label}</span>
